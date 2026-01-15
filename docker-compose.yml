@@ -1,0 +1,26 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: fredcom_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: fredcom
+      MYSQL_USER: fredcom
+      MYSQL_PASSWORD: fredcom
+    ports:
+      - "3307:3306"   # 3307 côté Windows pour éviter conflit avec XAMPP/MySQL local
+    volumes:
+      - db_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: fredcom_phpmyadmin
+    environment:
+      PMA_HOST: db
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+
+volumes:
+  db_data:
